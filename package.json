@@ -1,0 +1,26 @@
+{
+  "name": "exchanger",
+  "version": "1.0.0",
+  "description": "Unit and Currency Converter with NextJS frontend and NestJS backend",
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build": "cd frontend && npm run build && cd ../backend && npm run build",
+    "start": "concurrently \"cd frontend && npm start\" \"cd backend && npm start\"",
+    "clean": "rimraf node_modules frontend/node_modules backend/node_modules frontend/.next backend/dist",
+    "clean:cache": "rimraf frontend/.next backend/dist",
+    "lint": "concurrently \"cd frontend && npm run lint\" \"cd backend && npm run lint\"",
+    "lint:fix": "cd backend && npm run lint:fix",
+    "test": "concurrently \"cd frontend && npm test\" \"cd backend && npm test\"",
+    "test:e2e": "cd backend && npm run test:e2e"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
