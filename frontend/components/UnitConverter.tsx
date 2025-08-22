@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { convertLength } from '../utils/convertLength';
+import { convertLength, LengthUnit } from '../utils/convertLength';
 import { convertWeight, WeightUnit } from '../utils/convertWeight';
 import { convertTemp, TempUnit } from '../utils/convertTemp';
 
