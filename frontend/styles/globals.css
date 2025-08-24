@@ -1,8 +1,161 @@
-/* Global styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for CurrencyConverter */
+body {
+  background-color: #f9fafb;
+}
+
+.input-currency {
+  width: 100%;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  transition: all 200ms;
+}
+
+.input-currency:focus {
+  outline: none;
+  border-color: #00b85d;
+  box-shadow: 0 0 0 2px rgba(0, 184, 93, 0.2);
+}
+
+/* Wise-style button */
+.wise-button {
+  background-color: #00b85d;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 200ms;
+}
+
+.wise-button:hover {
+  background-color: #00a251;
+}
+
+/* Currency selector styles */
+.currency-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.currency-select:hover {
+  background-color: #f9fafb;
+}
+body {
+  background-color: #f5f5f5;
+}
+
+.currency-input {
+  @apply w-full text-3xl font-semibold border-2 border-gray-200 rounded-lg px-4 py-3 transition-colors duration-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200;
+}
+
+.currency-selector {
+  @apply flex items-center space-x-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.currency-flag {
+  @apply w-5 h-3 rounded;
+  object-fit: cover;
+}
+
+/* Custom scrollbar for dropdown */
+.currency-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.currency-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.currency-dropdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.currency-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.currency-input {
+  width: 100%;
+  font-size: 1.875rem;
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.currency-panel {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  transition: all 200ms;
+}
+
+.currency-panel:hover {
+  background-color: #f3f4f6;
+}
+
+.swap-button {
+  background-color: #eff6ff;
+  color: #2563eb;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 200ms;
+}
+
+.swap-button:hover {
+  background-color: #dbeafe;
+}
+
+.swap-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.rate-info {
+  font-size: 0.875rem;
+  color: #4b5563;
+  text-align: center;
+}
+
+.loading-message {
+  text-align: center;
+  color: #2563eb;
 }
 
 body {

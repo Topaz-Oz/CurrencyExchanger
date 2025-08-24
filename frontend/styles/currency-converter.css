@@ -1,0 +1,58 @@
+/* Utility classes for currency converter */
+.currency-input {
+  width: 100%;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.currency-panel {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  transition: all 200ms;
+}
+
+.currency-panel:hover {
+  background-color: #f3f4f6;
+}
+
+.swap-button {
+  background-color: #ebf5ff;
+  color: #2563eb;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  transition: colors 200ms;
+}
+
+.swap-button:hover {
+  background-color: #dbeafe;
+}
+
+.swap-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.rate-info {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #4b5563;
+  text-align: center;
+}
+
+.loading-message {
+  text-align: center;
+  color: #2563eb;
+}
