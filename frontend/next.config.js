@@ -1,14 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Disable image optimization for localhost
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'wise.com',
-        pathname: '/public-resources/assets/flags/rectangle/**',
-      },
-    ],
+    unoptimized: true,
   },
+  // Disable telemetry
+  telemetry: false,
+  // Enable strict mode for better development
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;

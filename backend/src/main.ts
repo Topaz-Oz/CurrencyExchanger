@@ -3,6 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import { envConfig } from './config/env.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,15 +16,16 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
   }));
 
-  // CORS configuration
+  // CORS configuration - Allow frontend localhost:3000
   app.enableCors({
-    origin: configService.get('CORS_ORIGIN'),
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: [envConfig.CORS_ORIGIN, 'http://127.0.0.1:3000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
 
   // API prefix
-  const globalPrefix = configService.get('API_GLOBAL_PREFIX', 'api');
+  const globalPrefix = envConfig.API_GLOBAL_PREFIX;
   app.setGlobalPrefix(globalPrefix);
 
   // Swagger documentation
@@ -35,13 +37,15 @@ async function bootstrap() {
     .build();
   
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(configService.get('SWAGGER_PATH', 'docs'), app, document);
+  SwaggerModule.setup(envConfig.SWAGGER_PATH, app, document);
 
   // Start the server
-  const port = configService.get('PORT', 3001);
+  const port = envConfig.PORT;
   await app.listen(port);
   console.log(`Application is running on: http://localhost:${port}`);
-  console.log(`Swagger documentation is available at: http://localhost:${port}/${configService.get('SWAGGER_PATH', 'docs')}`);
+  console.log(`Swagger documentation is available at: http://localhost:${port}/${envConfig.SWAGGER_PATH}`);
+  console.log(`CORS enabled for: ${envConfig.CORS_ORIGIN}`);
+  console.log(`API Key configured: ${envConfig.EXCHANGERATE_API_KEY ? 'Yes' : 'No'}`);
 }
 
 bootstrap();

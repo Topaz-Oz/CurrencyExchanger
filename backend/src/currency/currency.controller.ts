@@ -8,11 +8,59 @@ import {
   ExchangeRatesResponseDto,
   CurrencyListResponseDto
 } from './currency.dto';
+import axios from 'axios';
 
 @ApiTags('currency')
 @Controller('currency')
 export class CurrencyController {
   constructor(private readonly currencyService: CurrencyService) {}
+
+  @Get('test')
+  @ApiOperation({ summary: 'Test API key', description: 'Test if the API key is working' })
+  @ApiResponse({ status: 200, description: 'API key test result' })
+  async testApiKey() {
+    try {
+      // Test direct API call first
+      const apiKey = process.env.EXCHANGERATE_API_KEY || 'your_api_key_here';
+      console.log('Testing with API key:', apiKey);
+      
+      const response = await axios.get('https://api.exchangerate.host/convert', {
+        params: {
+          access_key: apiKey,
+          from: 'USD',
+          to: 'EUR',
+          amount: 1,
+          format: 1
+        }
+      });
+
+      console.log('Direct API Response:', JSON.stringify(response.data, null, 2));
+
+      if (!response.data?.success) {
+        return {
+          success: false,
+          message: 'API key test failed - success is false',
+          error: response.data?.error || 'Unknown error',
+          response: response.data
+        };
+      }
+
+      return {
+        success: true,
+        message: 'API key is working',
+        testResult: response.data.result,
+        response: response.data
+      };
+    } catch (error) {
+      console.error('Test API Error:', error.response?.data || error.message);
+      return {
+        success: false,
+        message: 'API key test failed',
+        error: error.response?.data || error.message,
+        status: error.response?.status
+      };
+    }
+  }
 
   @Get('rates')
   @ApiOperation({ summary: 'Get exchange rates', description: 'Get current exchange rates for a base currency' })
