@@ -16,7 +16,7 @@ export default function ExchangeRateChart({ from, to }: HistoricalRatesProps) {
   const [selectedTimeframe, setSelectedTimeframe] = useState('1 month');
   const [isOpen, setIsOpen] = useState(false);
 
-  const timeframes = ['48 hours', '1 week', '1 month', '6 months', '12 months', '5 years'];
+  const timeframes = ['48 giờ', '1 tuần', '1 tháng', '6 tháng', '12 tháng', '5 năm'];
 
   useEffect(() => {
     loadExchangeData();
@@ -94,7 +94,7 @@ export default function ExchangeRateChart({ from, to }: HistoricalRatesProps) {
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center space-x-2">
             <ShoppingBagIcon className="h-5 w-5 text-green-600" />
-            <span className="text-sm text-green-600 font-medium">Rate guaranteed (19h)</span>
+            <span className="text-sm text-green-600 font-medium">Tỉ giá đảm bảo (19h)</span>
           </div>
           <button 
             onClick={() => setIsOpen(!isOpen)}
@@ -107,13 +107,11 @@ export default function ExchangeRateChart({ from, to }: HistoricalRatesProps) {
         <div className="text-3xl font-bold text-gray-900 mb-2">
           1 USD = {formatNumber(exchangeData.currentRate)} VND
         </div>
-        
-        <div className="text-sm text-gray-600 mb-1">
-          You'll get this rate as long as we receive your 1,000 USD by {exchangeData.guaranteedUntil}.
-        </div>
-        
+        {/* <div className="text-sm text-gray-600 mb-1">
+          Bạn sẽ nhận được tỉ giá này nếu chúng tôi nhận được 1.000 USD của bạn trước {exchangeData.guaranteedUntil}.
+        </div> */}
         <div className="text-sm text-gray-500">
-          Updated {exchangeData.lastUpdated}
+          Cập nhật {exchangeData.lastUpdated}
         </div>
       </div>
 
@@ -187,21 +185,21 @@ export default function ExchangeRateChart({ from, to }: HistoricalRatesProps) {
         {/* Legend */}
         <div className="flex items-center justify-center space-x-2 mb-6">
           <div className="w-4 h-0.5 bg-green-600"></div>
-          <span className="text-sm text-gray-600">Mid market rate</span>
+          <span className="text-sm text-gray-600">Tỉ giá thị trường</span>
         </div>
 
         {/* Disclaimer */}
         <div className="text-sm text-gray-600 text-center mb-6">
-          We use the real, mid-market rate with no sneaky mark-up to hide the fees.{' '}
-          <a href="#" className="text-green-600 hover:text-green-700 underline">
-            Learn more
-          </a>
+          Chúng tôi sử dụng tỉ giá thị trường thực, không cộng thêm phí ẩn.{' '}
+          {/* <a href="#" className="text-green-600 hover:text-green-700 underline">
+            Tìm hiểu thêm
+          </a> */}
         </div>
 
         {/* Action Button */}
         <div className="flex justify-end">
           <button className="px-6 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors">
-            Track this exchange rate
+            Theo dõi tỉ giá này
           </button>
         </div>
       </div>

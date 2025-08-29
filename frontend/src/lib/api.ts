@@ -20,7 +20,7 @@ export const currencyApi = {
 
   getHistoricalRates: async (from: string, to: string, startDate: string, endDate: string) => {
     const response = await fetch(
-      `${API_BASE_URL}/historical?from=${from}&to=${to}&startDate=${startDate}&endDate=${endDate}`
+      `${API_BASE_URL}/historical?base=${from}&target=${to}&startDate=${startDate}&endDate=${endDate}`
     );
     if (!response.ok) {
       throw new Error('Network response was not ok');

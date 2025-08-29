@@ -1,7 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import Header from '../src/components/Header';
 import CurrencyConverter from '../src/components/CurrencyConverter';
 
 export default function Home() {
+  const [fromCurrency, setFromCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('VND');
+
   return (
     <>
       <Header />
@@ -17,7 +23,12 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <CurrencyConverter />
+            <CurrencyConverter
+              fromCurrency={fromCurrency}
+              toCurrency={toCurrency}
+              setFromCurrency={setFromCurrency}
+              setToCurrency={setToCurrency}
+            />
           </div>
         </div>
       </main>
