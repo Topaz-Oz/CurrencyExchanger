@@ -18,8 +18,13 @@ export const currencyApi = {
     return response.json();
   },
 
-  getHistorical: async () => {
-    const response = await fetch(`${API_BASE_URL}/historical`);
+  getHistoricalRates: async (from: string, to: string, startDate: string, endDate: string) => {
+    const response = await fetch(
+      `${API_BASE_URL}/historical?from=${from}&to=${to}&startDate=${startDate}&endDate=${endDate}`
+    );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     return response.json();
   },
 };

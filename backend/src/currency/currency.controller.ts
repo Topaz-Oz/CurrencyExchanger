@@ -1,4 +1,10 @@
-import { Controller, Get, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Query, 
+  HttpException, 
+  HttpStatus 
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CurrencyService } from './currency.service';
 import { 
@@ -8,7 +14,6 @@ import {
   ExchangeRatesResponseDto,
   CurrencyListResponseDto
 } from './currency.dto';
-import axios from 'axios';
 
 @ApiTags('currency')
 @Controller('currency')
@@ -16,50 +21,10 @@ export class CurrencyController {
   constructor(private readonly currencyService: CurrencyService) {}
 
   @Get('test')
-  @ApiOperation({ summary: 'Test API key', description: 'Test if the API key is working' })
+  @ApiOperation({ summary: 'Test API key', description: 'Verify if API key is valid by calling /convert with USD->EUR' })
   @ApiResponse({ status: 200, description: 'API key test result' })
   async testApiKey() {
-    try {
-      // Test direct API call first
-      const apiKey = process.env.EXCHANGERATE_API_KEY || 'your_api_key_here';
-      console.log('Testing with API key:', apiKey);
-      
-      const response = await axios.get('https://api.exchangerate.host/convert', {
-        params: {
-          access_key: apiKey,
-          from: 'USD',
-          to: 'EUR',
-          amount: 1,
-          format: 1
-        }
-      });
-
-      console.log('Direct API Response:', JSON.stringify(response.data, null, 2));
-
-      if (!response.data?.success) {
-        return {
-          success: false,
-          message: 'API key test failed - success is false',
-          error: response.data?.error || 'Unknown error',
-          response: response.data
-        };
-      }
-
-      return {
-        success: true,
-        message: 'API key is working',
-        testResult: response.data.result,
-        response: response.data
-      };
-    } catch (error) {
-      console.error('Test API Error:', error.response?.data || error.message);
-      return {
-        success: false,
-        message: 'API key test failed',
-        error: error.response?.data || error.message,
-        status: error.response?.status
-      };
-    }
+    return this.currencyService.testApiKey();
   }
 
   @Get('rates')
@@ -92,12 +57,8 @@ export class CurrencyController {
       throw new HttpException('Amount must be a positive number', HttpStatus.BAD_REQUEST);
     }
 
-    return {
-      result: await this.currencyService.convertCurrency(numAmount, from, to),
-      from,
-      to,
-      amount: numAmount
-    };
+    const result = await this.currencyService.convertCurrency(numAmount, from, to);
+    return { result, from, to, amount: numAmount };
   }
 
   @Get('currencies')
@@ -122,6 +83,15 @@ export class CurrencyController {
   async getHistoricalRates(
     @Query() query: HistoricalRateQueryDto
   ): Promise<HistoricalRatesResponseDto> {
+    // Validate max 30 days range
+    const start = new Date(query.startDate);
+    const end = new Date(query.endDate);
+    const diff = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (diff > 30) {
+      throw new HttpException('Date range cannot exceed 30 days', HttpStatus.BAD_REQUEST);
+    }
+
     return this.currencyService.getHistoricalRates(
       query.startDate,
       query.endDate,

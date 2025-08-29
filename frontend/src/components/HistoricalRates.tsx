@@ -6,7 +6,12 @@ import { currencyApi } from '../lib/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { XMarkIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 
-export default function ExchangeRateChart() {
+interface HistoricalRatesProps {
+  from: string;
+  to: string;
+}
+
+export default function ExchangeRateChart({ from, to }: HistoricalRatesProps) {
   const [exchangeData, setExchangeData] = useState<ExchangeRateData | null>(null);
   const [selectedTimeframe, setSelectedTimeframe] = useState('1 month');
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +24,7 @@ export default function ExchangeRateChart() {
 
   const loadExchangeData = async () => {
     try {
-      const data = await currencyApi.getHistorical();
+      const data = await currencyApi.getHistoricalRates('USD', 'VND', '2024-07-25', '2024-08-24');
       // Simulate exchange rate data for demo
       const simulatedData: ExchangeRateData = {
         currentRate: 26350,
